@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        ul>li{
+            list-style: none;
+        }
+        .out{
+            width: 520px;
+            height: 280px;
+            border: 1px solid black;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 50px;
+            /* overflow:auto; */
+        }
+        .num{
+            position: absolute;
+            left: 50%;
+            bottom: 15px;
+            transform: translate(-50%);
+        }
+        .num>li{
+            float: left;
+            width: 40px;
+            height: 30px;
+            background-color: #ccc;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            margin-left: 10px;
+            font-size: 20px;
+            border-radius: 15px;
+        }
+        .both{
+            overflow: hidden;
+        }
+        .imgs{
+            width: 3120px;
+        }
+        .imgs>img{
+            float: left;
+        }
+        .color{
+            background-color: rgb(125, 214, 241) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="out">
+        <div class="both">
+            <div class="imgs">
+                <img src="./img/4.jpg" alt="">
+                <img src="./img/0.jpg" alt="">
+                <img src="./img/1.jpg" alt="">
+                <img src="./img/2.jpg" alt="">
+                <img src="./img/3.jpg" alt="">
+                <img src="./img/4.jpg" alt="">
+            </div>
+        </div>
+        <ul class="num">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <script>
+
+
+        var imgs = document.getElementsByClassName('imgs');
+        var both = document.getElementsByClassName('both')[0];
+        var img = document.getElementsByTagName('img');
+        var li = document.getElementsByTagName('li');
+        var index = 0;
+        var timer = null;
+        var timer1 = null;
+        // 给照片分成小份
+        function first(){
+            // 分成的份数
+            var num = 20;
+            // 累加的份数
+            var four = 0;
+            //开始的位置
+            var start = both.scrollLeft;
+            // 结束的位置
+            var end = img[0].offsetWidth*index;
+            // 得到每一步的距离
+             var veryW = (end - start) / num
+            timer1 = setInterval(function(){
+                four++;
+                if(four >= num){
+                    four = 0;
+                    clearInterval(timer1)
+                }
+                // 走的距离
+                start += veryW;
+                both.scrollLeft = start
+            },10)
+        }
+        // 给li设置样式
+        function go(){
+            for(var i=0; i<li.length; i++){
+                li[i].className = ''
+            }
+            li[index-1].className='color';
+        }
+
+        function automove(){
+            timer = setInterval(function(){
+                index++;
+                if(index >= img.length){
+                    index = 1;
+                    both.scrollLeft = 0;
+                }
+                first();
+                go()
+            },1000)
+        }
+        automove()
+    </script>
+</body>
+</html>
